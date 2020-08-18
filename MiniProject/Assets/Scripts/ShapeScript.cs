@@ -31,6 +31,11 @@ public class ShapeScript : MonoBehaviour
         }
     }
 
+    public void GetAdjacent()
+    {
+        
+    }
+
     void OnCollisionStay(Collision col)
     //void OnCollisionEnter(Collision col)
     {
