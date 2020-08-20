@@ -37,8 +37,8 @@ public class PlayerInputScript : MonoBehaviour
 
     void SelectObject()
     {
-        if (isSwapping) { return; }
-        if (!Input.GetKeyDown(KeyCode.Mouse0)) { return; }
+        if (isSwapping) { return; } // If in Swapping - Dont Run the Code
+        if (!Input.GetKeyDown(KeyCode.Mouse0)) { return; } // If not Left Clicking - Dont Run the Code
 
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -95,8 +95,6 @@ public class PlayerInputScript : MonoBehaviour
         swappingSpeed = (((swappingObj1Pos - swappingObj2Pos).magnitude)/1.5f) / swappingDuration;
         Obj1ToObj2 = selectedObject2.transform.position - swappingObj1Pos;
         Obj2ToObj1 = selectedObject1.transform.position - swappingObj2Pos;
-
-        print(Obj1ToObj2.y);
 
         if (Mathf.Round(Obj1ToObj2.x) != 0)
         {
