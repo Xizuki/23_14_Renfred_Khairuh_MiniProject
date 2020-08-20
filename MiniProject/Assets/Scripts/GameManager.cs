@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour
 
     public bool CheckMatch(ShapeScript[] shapes) // Can Tidy up but dont need to rush
     {
-        foreach(ShapeScript shape in shapes)
+        bool Checkings = false;
+
+        foreach (ShapeScript shape in shapes)
         {
             bool[] Check = new bool[4];
             bool[] yCheck = new bool[2];
@@ -36,8 +38,8 @@ public class GameManager : MonoBehaviour
             }
 
 
-            if (Check[0] && Check[1]) { Destroy(shape.gameObject); Destroy(shape.adjacentShapeColliders[0].shape); Destroy(shape.adjacentShapeColliders[1].shape); return true; }
-            if (Check[2] && Check[3]) { Destroy(shape.gameObject); Destroy(shape.adjacentShapeColliders[2].shape); Destroy(shape.adjacentShapeColliders[3].shape); return true; }
+            if (Check[0] && Check[1]) { Destroy(shape.gameObject); Destroy(shape.adjacentShapeColliders[0].shape); Destroy(shape.adjacentShapeColliders[1].shape); Checkings = true; }
+            if (Check[2] && Check[3]) { Destroy(shape.gameObject); Destroy(shape.adjacentShapeColliders[2].shape); Destroy(shape.adjacentShapeColliders[3].shape); Checkings = true; }
 
             for(int i =0; i< Check.Length; i++)
             {
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour
                     Destroy(shape.gameObject);
                     Destroy(shape.adjacentShapeColliders[i].shape);
                     Destroy(shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape);
-                    return true;
+                    Checkings = true;
                 }
             }
             /*
@@ -80,6 +82,6 @@ public class GameManager : MonoBehaviour
 
             */
         }
-        return false;
+        return Checkings;
     }
 }
