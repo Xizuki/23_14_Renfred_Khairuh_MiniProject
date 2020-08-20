@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ShapeScript : MonoBehaviour
 {
-    public GameObject[] adjacentShapes;
+    public ShapeAdjacentColliderScript[] adjacentShapeColliders; // [0] = x+1, [1] = x-1, [2] = y+1, [3] = y-1
+    public GameObject selectedEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,9 +22,10 @@ public class ShapeScript : MonoBehaviour
     void Swap(GameObject other)
     {
         bool check = false;
-        foreach(GameObject shape in adjacentShapes)
+        
+        foreach(ShapeAdjacentColliderScript col in adjacentShapeColliders)
         {
-            if(shape == other) { check = true; }
+            if(col.shape == other) { check = true; }
         }
 
         if(check)
@@ -31,27 +34,9 @@ public class ShapeScript : MonoBehaviour
         }
     }
 
-    public void GetAdjacent()
+    public void CheckMatch()
     {
         
     }
 
-    void OnCollisionStay(Collision col)
-    //void OnCollisionEnter(Collision col)
-    {
-        bool sameObject = false;
-        foreach (GameObject shape in adjacentShapes)
-        {
-            if(col.gameObject == shape) { sameObject = true; break; }
-        }
-
-        if (!sameObject)
-        {
-            for(int i =0; i<adjacentShapes.Length;i++)
-            {
-                if(adjacentShapes[i] != null) { break; }
-                adjacentShapes[i] = col.gameObject;
-            }
-        }
-    }
 }
