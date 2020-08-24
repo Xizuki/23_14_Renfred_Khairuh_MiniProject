@@ -51,12 +51,10 @@ public class GameManager : MonoBehaviour
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape == null) { break; }
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.name == shape.name)
                 {
-                    CheckSameShape(new ShapeScript[]
-                    {
-                          shape.gameObject.GetComponent<ShapeScript>()
-                        , shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>()
-                        , shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>()
-                    });
+                    CheckSameShape(shape.gameObject.GetComponent<ShapeScript>());
+                    CheckSameShape(shape.adjacentShapeColliders[i].shape.gameObject.GetComponent<ShapeScript>());
+                    CheckSameShape(shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.gameObject.GetComponent<ShapeScript>());
+
                     Destroy(shape.gameObject);
                     Destroy(shape.adjacentShapeColliders[i].shape);
                     Destroy(shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape);
@@ -65,22 +63,24 @@ public class GameManager : MonoBehaviour
                     areShapesFalling = true;
                 }
             }
-            
+
         }
         return Checkings;
     }
 
-    public void CheckSameShape(ShapeScript[] shapes)
+    public void CheckSameShape(ShapeScript shape)
     {
-        print("CheckSameShape()");
-        foreach(ShapeScript shape in shapes)
+        for (int i = 0; i < 4; i++)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                print("CheckSameShape() 1");
-                if (shape.adjacentShapeColliders[i].shape == shape) { print("CheckSameShape()2"); Destroy(shape.adjacentShapeColliders[i].shape); }
-            }
-        }
+            if (shape.adjacentShapeColliders[i].shape == null) { continue; }
+            if (shape.adjacentShapeColliders[i].shape.name != shape.gameObject.name) { continue; }
+            if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().ChainReactionCheck) { continue; }
+
+            shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().ChainReactionCheck = true;
+            CheckSameShape(shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>());
+            Destroy(shape.adjacentShapeColliders[i].shape);
+
+        } 
     }
 
     public void CheckShapesVelocity()

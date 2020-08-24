@@ -7,6 +7,8 @@ public class ShapeScript : MonoBehaviour
     public ShapeAdjacentColliderScript[] adjacentShapeColliders; // [0] = x+1, [1] = x-1, [2] = y+1, [3] = y-1
     public GameObject selectedEffect;
     public bool isFalling;
+    public bool ChainReactionCheck;
+
 
     // Start is called before the first frame update
     void Start()
