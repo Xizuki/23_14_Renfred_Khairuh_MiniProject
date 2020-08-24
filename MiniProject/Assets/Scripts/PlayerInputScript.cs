@@ -22,6 +22,7 @@ public class PlayerInputScript : MonoBehaviour
     public GameObject runtimeSwappingCollider;
 
     private bool triggerOnce = false;
+    [SerializeField]private bool checkOnce = false;
 
     //public GameObject swappingCollider;
     // Start is called before the first frame update
@@ -110,12 +111,20 @@ public class PlayerInputScript : MonoBehaviour
             runtimeSwappingCollider.transform.eulerAngles = new Vector3(0, 0, 90);
         }
 
+        triggerOnce = false;
         isSwapping = true;
+        
     }
 
     void Swapping()
     {
-        
+        if (triggerOnce)
+        {
+            checkOnce = false;
+        }
+        else
+            checkOnce = true;
+
 
         if (!isSwapping) { return; }
 
@@ -126,9 +135,9 @@ public class PlayerInputScript : MonoBehaviour
 
         if(swappingTimer < swappingDuration) { return; }
 
-        print(GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }));
+        print(GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }, checkOnce));
 
-        if (GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }) == true)
+        if (GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }, checkOnce) == true)
         {
             Destroy(runtimeSwappingCollider);
             isSwapping = false;
@@ -146,7 +155,7 @@ public class PlayerInputScript : MonoBehaviour
             selectedObject1 = null;
             selectedObject2 = null;
         }
-        else
+        else 
         {
             if (!triggerOnce)
             {
@@ -171,11 +180,8 @@ public class PlayerInputScript : MonoBehaviour
             selectedObject1 = null;
             selectedObject2 = null;
 
-            if (triggerOnce)
-            {
-                swappingSpeed = -swappingSpeed;
-                triggerOnce = false;
-            }
+            
+
         }
 
         

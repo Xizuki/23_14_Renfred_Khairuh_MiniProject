@@ -17,8 +17,11 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public bool CheckMatch(ShapeScript[] shapes) // Can Tidy up but dont need to rush
+    public bool CheckMatch(ShapeScript[] shapes, bool canCheck) // Can Tidy up but dont need to rush
     {
+        if (!canCheck)
+            return false;
+
         bool Checkings = false;
 
         foreach (ShapeScript shape in shapes)
@@ -44,6 +47,7 @@ public class GameManager : MonoBehaviour
             for(int i =0; i< Check.Length; i++)
             {
                 if (shape.adjacentShapeColliders[i].shape == null) { break; }
+                if (!Check[i]) { continue; }
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape == null) { break; }
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.name == shape.name)
                 {
