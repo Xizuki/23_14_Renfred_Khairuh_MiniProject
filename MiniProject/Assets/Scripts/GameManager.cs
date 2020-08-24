@@ -5,6 +5,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public bool areShapesFalling;
+    public float CheckShapesNotFallingTime;
+    public float CheckShapesNotFallingTimer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +18,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        CheckShapesVelocity();
+        CheckShapesNotFallingTimer += Time.deltaTime;
     }
 
     public bool CheckMatch(ShapeScript[] shapes) // Can Tidy up but dont need to rush
@@ -46,14 +51,50 @@ public class GameManager : MonoBehaviour
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape == null) { break; }
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.name == shape.name)
                 {
+                    CheckSameShape(new ShapeScript[]
+                    {
+                          shape.gameObject.GetComponent<ShapeScript>()
+                        , shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>()
+                        , shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>()
+                    });
                     Destroy(shape.gameObject);
                     Destroy(shape.adjacentShapeColliders[i].shape);
                     Destroy(shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape);
                     Checkings = true;
+
+                    areShapesFalling = true;
                 }
             }
             
         }
         return Checkings;
+    }
+
+    public void CheckSameShape(ShapeScript[] shapes)
+    {
+        print("CheckSameShape()");
+        foreach(ShapeScript shape in shapes)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                print("CheckSameShape() 1");
+                if (shape.adjacentShapeColliders[i].shape == shape) { print("CheckSameShape()2"); Destroy(shape.adjacentShapeColliders[i].shape); }
+            }
+        }
+    }
+
+    public void CheckShapesVelocity()
+    {
+        if(CheckShapesNotFallingTimer < CheckShapesNotFallingTime) { return; }
+        CheckShapesNotFallingTimer = 0;
+        if (!areShapesFalling) { return; }
+
+        GameObject[] shapes = GameObject.FindGameObjectsWithTag("Shape");
+
+        foreach (GameObject shape in shapes)
+        {
+            if(Mathf.RoundToInt(shape.GetComponent<Rigidbody>().velocity.y) !=0) { return; }
+        }
+        areShapesFalling = false;
     }
 }

@@ -21,6 +21,7 @@ public class PlayerInputScript : MonoBehaviour
     public GameObject prefabSwappingCollider;
     public GameObject runtimeSwappingCollider;
 
+    [SerializeField]
     private bool triggerOnce = false;
 
     //public GameObject swappingCollider;
@@ -39,7 +40,7 @@ public class PlayerInputScript : MonoBehaviour
 
     void SelectObject()
     {
-        if (isSwapping) { return; } // If in Swapping - Dont Run the Code
+        if (isSwapping || GameManager.instance.areShapesFalling) { return; } // If in Swapping - Dont Run the Code
         if (!Input.GetKeyDown(KeyCode.Mouse0)) { return; } // If not Left Clicking - Dont Run the Code
 
         RaycastHit hit;
@@ -115,8 +116,6 @@ public class PlayerInputScript : MonoBehaviour
 
     void Swapping()
     {
-        
-
         if (!isSwapping) { return; }
 
         selectedObject1.transform.position += Obj1ToObj2 * swappingSpeed * Time.deltaTime;
@@ -145,6 +144,7 @@ public class PlayerInputScript : MonoBehaviour
 
             selectedObject1 = null;
             selectedObject2 = null;
+
         }
         else
         {
@@ -156,6 +156,7 @@ public class PlayerInputScript : MonoBehaviour
 
             if (swappingTimer < (swappingDuration * 2)) { return; }
             Destroy(runtimeSwappingCollider);
+
             isSwapping = false;
             swappingTimer = 0;
 
