@@ -371,7 +371,7 @@ MonoBehaviour:
   selectedObject2: {fileID: 0}
   swappingObj1Pos: {x: 0, y: 0, z: 0}
   swappingObj2Pos: {x: 0, y: 0, z: 0}
-  swappingSpeed: 0
+  swappingSpeed: 1
   isSwapping: 0
   swappingTimer: 0
   swappingDuration: 0.5

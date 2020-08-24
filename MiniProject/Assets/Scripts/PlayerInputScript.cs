@@ -21,6 +21,8 @@ public class PlayerInputScript : MonoBehaviour
     public GameObject prefabSwappingCollider;
     public GameObject runtimeSwappingCollider;
 
+    private bool triggerOnce = false;
+
     //public GameObject swappingCollider;
     // Start is called before the first frame update
     void Start()
@@ -113,32 +115,69 @@ public class PlayerInputScript : MonoBehaviour
 
     void Swapping()
     {
+        
+
         if (!isSwapping) { return; }
 
         selectedObject1.transform.position += Obj1ToObj2 * swappingSpeed * Time.deltaTime;
         selectedObject2.transform.position += Obj2ToObj1 * swappingSpeed * Time.deltaTime;
+
         swappingTimer += Time.deltaTime;
 
         if(swappingTimer < swappingDuration) { return; }
-        isSwapping = false;
-        swappingTimer = 0;
 
         print(GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }));
 
+        if (GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }) == true)
+        {
+            Destroy(runtimeSwappingCollider);
+            isSwapping = false;
+            swappingTimer = 0;
 
+            selectedObject1.layer = LayerMask.NameToLayer("Default");
+            selectedObject2.layer = LayerMask.NameToLayer("Default");
+            selectedObject1.GetComponent<Rigidbody>().useGravity = true;
+            selectedObject2.GetComponent<Rigidbody>().useGravity = true;
+            //selectedObject1.GetComponent<BoxCollider>().enabled = true;
+            //selectedObject2.GetComponent<BoxCollider>().enabled = true;
+            selectedObject1.GetComponent<ShapeScript>().selectedEffect.SetActive(false);
+            selectedObject2.GetComponent<ShapeScript>().selectedEffect.SetActive(false);
 
-        Destroy(runtimeSwappingCollider);
+            selectedObject1 = null;
+            selectedObject2 = null;
+        }
+        else
+        {
+            if (!triggerOnce)
+            {
+                swappingSpeed = -swappingSpeed;
+                triggerOnce = true;
+            }
 
-        selectedObject1.layer = LayerMask.NameToLayer("Default");
-        selectedObject2.layer = LayerMask.NameToLayer("Default");
-        selectedObject1.GetComponent<Rigidbody>().useGravity = true;
-        selectedObject2.GetComponent<Rigidbody>().useGravity = true;
-        //selectedObject1.GetComponent<BoxCollider>().enabled = true;
-        //selectedObject2.GetComponent<BoxCollider>().enabled = true;
-        selectedObject1.GetComponent<ShapeScript>().selectedEffect.SetActive(false);
-        selectedObject2.GetComponent<ShapeScript>().selectedEffect.SetActive(false);
+            if (swappingTimer < (swappingDuration * 2)) { return; }
+            Destroy(runtimeSwappingCollider);
+            isSwapping = false;
+            swappingTimer = 0;
 
-        selectedObject1 = null;
-        selectedObject2 = null;
+            selectedObject1.layer = LayerMask.NameToLayer("Default");
+            selectedObject2.layer = LayerMask.NameToLayer("Default");
+            selectedObject1.GetComponent<Rigidbody>().useGravity = true;
+            selectedObject2.GetComponent<Rigidbody>().useGravity = true;
+            //selectedObject1.GetComponent<BoxCollider>().enabled = true;
+            //selectedObject2.GetComponent<BoxCollider>().enabled = true;
+            selectedObject1.GetComponent<ShapeScript>().selectedEffect.SetActive(false);
+            selectedObject2.GetComponent<ShapeScript>().selectedEffect.SetActive(false);
+
+            selectedObject1 = null;
+            selectedObject2 = null;
+
+            if (triggerOnce)
+            {
+                swappingSpeed = -swappingSpeed;
+                triggerOnce = false;
+            }
+        }
+
+        
     }
 }
