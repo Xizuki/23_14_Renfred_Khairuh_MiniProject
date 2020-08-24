@@ -1,14 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    public int score;
+    //public int moves;
+
+    public Text scoreText;
+
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
+        scoreText.text = "Score : " + score;
     }
 
     // Update is called once per frame
@@ -87,5 +95,11 @@ public class GameManager : MonoBehaviour
             */
         }
         return Checkings;
+    }
+
+    public void GainScore(int plusScore)
+    {
+        score += plusScore;
+        scoreText.text = "Score : " + score;
     }
 }
