@@ -46,9 +46,9 @@ public class GameManager : MonoBehaviour
 
             for(int i =0; i< Check.Length; i++)
             {
-                if (shape.adjacentShapeColliders[i].shape == null) { break; }
+                if (shape.adjacentShapeColliders[i].shape == null) { continue; }
                 if (!Check[i]) { continue; }
-                if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape == null) { break; }
+                if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape == null) { continue; }
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.name == shape.name)
                 {
                     CheckSameShape(shape.gameObject.GetComponent<ShapeScript>());

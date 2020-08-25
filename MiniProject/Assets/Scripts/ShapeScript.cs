@@ -8,17 +8,29 @@ public class ShapeScript : MonoBehaviour
     public GameObject selectedEffect;
     public bool isFalling;
     public bool ChainReactionCheck;
+    public bool yCheck;
+    public Rigidbody rb;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        if (GameManager.instance.areShapesFalling)
+        {
+            if (rb.velocity.y < -0.05f) { yCheck = true; }
+            if (yCheck && (rb.velocity.y >= 0.001) && rb.velocity.y < 0.005f) { GameManager.instance.CheckMatch(new ShapeScript[] { this }); }
+        }
+        else
+        {
+            yCheck = false;
+        }
     }
 
     void Swap(GameObject other)
@@ -43,12 +55,12 @@ public class ShapeScript : MonoBehaviour
 
     public void OnCollisionEnter(Collision col)     // WORK ON THIS
     {
-        if (!GameManager.instance.areShapesFalling) { return; }
-        if (GetComponent<Rigidbody>().velocity.y < 0f) { return; }
-        //if (Mathf.Round(col.gameObject.GetComponent<Rigidbody>().velocity.y) != 0){ return; }
-        print("falling");
+        //if (!GameManager.instance.areShapesFalling) { return; }
+        //if (GetComponent<Rigidbody>().velocity.y < 0f) { return; }
+        //if (col.gameObject.GetComponent<Rigidbody>().velocity.y != 0){ return; }
+        //print("falling");
 
-        GameManager.instance.CheckMatch(new ShapeScript[] { this });
+        //GameManager.instance.CheckMatch(new ShapeScript[] { this });
     }
 
 
