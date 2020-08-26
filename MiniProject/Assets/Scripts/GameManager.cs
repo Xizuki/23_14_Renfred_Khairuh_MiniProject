@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public bool areShapesFalling;
     public float CheckShapesNotFallingTime;
     public float CheckShapesNotFallingTimer;
+    public ParticleSystem destroyedPart;
 
     // Start is called before the first frame update
     void Start()
@@ -41,23 +42,17 @@ public class GameManager : MonoBehaviour
             }
 
 
-            if (Check[0] && Check[1]) { Destroy(shape.gameObject); Destroy(shape.adjacentShapeColliders[0].shape); Destroy(shape.adjacentShapeColliders[1].shape); Checkings = true; }
-            if (Check[2] && Check[3]) { Destroy(shape.gameObject); Destroy(shape.adjacentShapeColliders[2].shape); Destroy(shape.adjacentShapeColliders[3].shape); Checkings = true; }
+            if (Check[0] && Check[1]) { DestroyShapes(shape.gameObject.GetComponent<ShapeScript>(), shape.adjacentShapeColliders[0].shape.GetComponent<ShapeScript>(), shape.adjacentShapeColliders[1].shape.GetComponent<ShapeScript>()); Checkings = true; }
+            if (Check[2] && Check[3]) { DestroyShapes(shape.gameObject.GetComponent<ShapeScript>(), shape.adjacentShapeColliders[2].shape.GetComponent<ShapeScript>(), shape.adjacentShapeColliders[3].shape.GetComponent<ShapeScript>()); Checkings = true; }
 
-            for(int i =0; i< Check.Length; i++)
+            for (int i =0; i< Check.Length; i++)
             {
                 if (shape.adjacentShapeColliders[i].shape == null) { continue; }
                 if (!Check[i]) { continue; }
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape == null) { continue; }
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.name == shape.name)
                 {
-                    CheckSameShape(shape.gameObject.GetComponent<ShapeScript>());
-                    CheckSameShape(shape.adjacentShapeColliders[i].shape.gameObject.GetComponent<ShapeScript>());
-                    CheckSameShape(shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.gameObject.GetComponent<ShapeScript>());
-
-                    Destroy(shape.gameObject);
-                    Destroy(shape.adjacentShapeColliders[i].shape);
-                    Destroy(shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape);
+                    DestroyShapes(shape, shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>(), shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>());
                     Checkings = true;
 
                     areShapesFalling = true;
@@ -68,7 +63,26 @@ public class GameManager : MonoBehaviour
         return Checkings;
     }
 
-    public void CheckSameShape(ShapeScript shape)
+    public void DestroyShapes(ShapeScript shape1, ShapeScript shape2, ShapeScript shape3)
+    {
+        ParticleSystem part1 = Instantiate(destroyedPart, shape1.transform.position, Quaternion.identity);
+        ParticleSystem part2 = Instantiate(destroyedPart, shape2.transform.position, Quaternion.identity);
+        ParticleSystem part3 = Instantiate(destroyedPart, shape3.transform.position, Quaternion.identity);
+
+        part1.startColor = shape1.GetComponentInChildren<MeshRenderer>().material.color;
+        part2.startColor = part1.startColor;
+        part3.startColor = part1.startColor;
+
+        CheckSameShape(shape1, part1.startColor);
+        CheckSameShape(shape2, part2.startColor);
+        CheckSameShape(shape3, part3.startColor);
+
+        Destroy(shape1.gameObject);
+        Destroy(shape2.gameObject);
+        Destroy(shape3.gameObject);
+    }
+
+    public void CheckSameShape(ShapeScript shape, Color color)
     {
         for (int i = 0; i < 4; i++)
         {
@@ -77,7 +91,12 @@ public class GameManager : MonoBehaviour
             if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().ChainReactionCheck) { continue; }
 
             shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().ChainReactionCheck = true;
-            CheckSameShape(shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>());
+
+            CheckSameShape(shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>(),color);
+
+            ParticleSystem part1 = Instantiate(destroyedPart, shape.transform.position, Quaternion.identity);
+            part1.startColor = color;
+
             Destroy(shape.adjacentShapeColliders[i].shape);
 
         } 

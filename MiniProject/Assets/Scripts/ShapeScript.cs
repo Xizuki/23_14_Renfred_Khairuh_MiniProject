@@ -24,8 +24,8 @@ public class ShapeScript : MonoBehaviour
         
         if (GameManager.instance.areShapesFalling)
         {
-            if (rb.velocity.y < -0.05f) { yCheck = true; }
-            if (yCheck && (rb.velocity.y >= 0.001) && rb.velocity.y < 0.005f) { GameManager.instance.CheckMatch(new ShapeScript[] { this }); }
+            if (rb.velocity.y < -0.025f) { yCheck = true; }
+            if (yCheck && (rb.velocity.y >= 0.001) && rb.velocity.y < 0.01f) { GameManager.instance.CheckMatch(new ShapeScript[] { this }); }
         }
         else
         {

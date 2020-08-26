@@ -127,7 +127,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3, y: 1.5, z: 1.5}
+  m_Size: {x: 1, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5657720362538867661
 Rigidbody:
@@ -163,6 +163,10 @@ MonoBehaviour:
   - {fileID: 7017862154705362354}
   - {fileID: 7019893084090756473}
   selectedEffect: {fileID: 2506130632717357436}
+  isFalling: 0
+  ChainReactionCheck: 0
+  yCheck: 0
+  rb: {fileID: 0}
 --- !u!1001 &1470248552913109461
 PrefabInstance:
   m_ObjectHideFlags: 0
