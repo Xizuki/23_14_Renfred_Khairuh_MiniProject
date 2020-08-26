@@ -69,13 +69,15 @@ public class GameManager : MonoBehaviour
         ParticleSystem part2 = Instantiate(destroyedPart, shape2.transform.position, Quaternion.identity);
         ParticleSystem part3 = Instantiate(destroyedPart, shape3.transform.position, Quaternion.identity);
 
+        print(shape1.GetComponentInChildren<MeshRenderer>().material.color);
+
         part1.startColor = shape1.GetComponentInChildren<MeshRenderer>().material.color;
         part2.startColor = part1.startColor;
         part3.startColor = part1.startColor;
 
         CheckSameShape(shape1, part1.startColor);
-        CheckSameShape(shape2, part2.startColor);
-        CheckSameShape(shape3, part3.startColor);
+        CheckSameShape(shape2, part1.startColor);
+        CheckSameShape(shape3, part1.startColor);
 
         Destroy(shape1.gameObject);
         Destroy(shape2.gameObject);
