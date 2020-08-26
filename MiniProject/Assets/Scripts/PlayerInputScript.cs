@@ -125,8 +125,6 @@ public class PlayerInputScript : MonoBehaviour
 
         if(swappingTimer < swappingDuration) { return; }
 
-        print(GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }));
-
         if (GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }) == true)
         {
             Destroy(runtimeSwappingCollider);
