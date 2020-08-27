@@ -22,14 +22,14 @@ public class SpawnTileScript : MonoBehaviour
 
     void SpawnShapes()
     {
-        if(spawnTimer < spawnTime) { return; }
+        if (spawnTimer < spawnTime) { return; }
 
         spawnTimer = 0;
         // int locationElement = Random.Range(0, spawnLocations.Length);
 
-            int shapeElement = Random.Range(0, shapes.Length);
-            Instantiate(shapes[shapeElement], transform.position, Quaternion.identity);
-            //Instantiate(shapes[shapeElement], spawnLocations[locationElement].position, Quaternion.identity);
+        int shapeElement = Random.Range(0, shapes.Length);
+        Instantiate(shapes[shapeElement], transform.position, Quaternion.identity);
+        //Instantiate(shapes[shapeElement], spawnLocations[locationElement].position, Quaternion.identity);
     }
 
     void OnTriggerStay(Collider col)
