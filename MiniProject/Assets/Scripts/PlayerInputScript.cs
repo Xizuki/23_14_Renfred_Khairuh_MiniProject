@@ -41,7 +41,7 @@ public class PlayerInputScript : MonoBehaviour
 
     void SelectObject()
     {
-        if (isSwapping || GameManager.instance.areShapesFalling) { return; } // If in Swapping - Dont Run the Code
+        if (GameManager.instance.JustStarted ||isSwapping || GameManager.instance.areShapesFalling) { return; } // If in Swapping - Dont Run the Code
         if (!Input.GetKeyDown(KeyCode.Mouse0)) { return; } // If not Left Clicking - Dont Run the Code
 
         RaycastHit hit;
