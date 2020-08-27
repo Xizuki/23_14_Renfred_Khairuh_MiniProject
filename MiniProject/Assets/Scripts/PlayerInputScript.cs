@@ -119,7 +119,7 @@ public class PlayerInputScript : MonoBehaviour
 
     void Swapping()
     {
-<<<<<<< HEAD
+
         if (triggerOnce)
         {
             checkOnce = false;
@@ -128,8 +128,7 @@ public class PlayerInputScript : MonoBehaviour
             checkOnce = true;
 
 
-=======
->>>>>>> branch_Merged_Renfred
+
         if (!isSwapping) { return; }
 
         selectedObject1.transform.position += Obj1ToObj2 * swappingSpeed * Time.deltaTime;
@@ -139,13 +138,10 @@ public class PlayerInputScript : MonoBehaviour
 
         if(swappingTimer < swappingDuration) { return; }
 
-<<<<<<< HEAD
+
         print(GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }, checkOnce));
 
         if (GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }, checkOnce) == true)
-=======
-        if (GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }) == true)
->>>>>>> branch_Merged_Renfred
         {
             Destroy(runtimeSwappingCollider);
             isSwapping = false;

@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/Khairul'sScene.unity
-=======
 - path: Assets/Scenes/GameScene.unity
->>>>>>> branch_Merged_Renfred
   isLoaded: 1
   isActive: 1

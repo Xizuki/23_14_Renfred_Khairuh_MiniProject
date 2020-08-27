@@ -6,18 +6,15 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-<<<<<<< HEAD
 
     public int score;
     //public int moves;
 
     public Text scoreText;
-=======
     public bool areShapesFalling;
     public float CheckShapesNotFallingTime;
     public float CheckShapesNotFallingTimer;
     public ParticleSystem destroyedPart;
->>>>>>> branch_Merged_Renfred
 
     // Start is called before the first frame update
     void Start()
@@ -60,15 +57,15 @@ public class GameManager : MonoBehaviour
 
             for (int i =0; i< Check.Length; i++)
             {
-<<<<<<< HEAD
+
                 if (shape.adjacentShapeColliders[i].shape == null) { break; }
                 if (!Check[i]) { continue; }
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape == null) { break; }
-=======
+
                 if (shape.adjacentShapeColliders[i].shape == null) { continue; }
                 if (!Check[i]) { continue; }
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape == null) { continue; }
->>>>>>> branch_Merged_Renfred
+
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.name == shape.name)
                 {
                     DestroyShapes(shape, shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>(), shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>());
@@ -82,12 +79,11 @@ public class GameManager : MonoBehaviour
         return Checkings;
     }
 
-<<<<<<< HEAD
     public void GainScore(int plusScore)
     {
         score += plusScore;
         scoreText.text = "Score : " + score;
-=======
+    }
     public void DestroyShapes(ShapeScript shape1, ShapeScript shape2, ShapeScript shape3)
     {
         ParticleSystem part1 = Instantiate(destroyedPart, shape1.transform.position, Quaternion.identity);
@@ -142,6 +138,5 @@ public class GameManager : MonoBehaviour
             if(Mathf.RoundToInt(shape.GetComponent<Rigidbody>().velocity.y) !=0) { return; }
         }
         areShapesFalling = false;
->>>>>>> branch_Merged_Renfred
     }
 }
