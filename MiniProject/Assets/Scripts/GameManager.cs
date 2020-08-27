@@ -69,10 +69,6 @@ public class GameManager : MonoBehaviour
 
             for (int i = 0; i < Check.Length; i++)
             {
-<<<<<<< HEAD
-
-=======
->>>>>>> branch_Renfred_v3
                 if (shape.adjacentShapeColliders[i].shape == null) { continue; }
                 if (!Check[i]) { continue; }
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape == null) { continue; }
@@ -92,7 +88,7 @@ public class GameManager : MonoBehaviour
 
     public void GainScore(int plusScore)
     {
-        audioSource.Play();
+        //audioSource.Play();
         score += plusScore;
         scoreText.text = "Score : " + score;
 
