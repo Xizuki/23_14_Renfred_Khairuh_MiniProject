@@ -10,7 +10,14 @@ public class ShapeScript : MonoBehaviour
     public bool ChainReactionCheck;
     public bool yCheck;
     public Rigidbody rb;
+    [SerializeField] private float Yvelocity = 0;
 
+    private State state;
+    private enum State
+    {
+        Idle,
+        Falling
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -21,15 +28,25 @@ public class ShapeScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Yvelocity = rb.velocity.y;
         if (GameManager.instance.areShapesFalling)
         {
-            if (rb.velocity.y < -0.025f) { yCheck = true; }
-            if (yCheck && (rb.velocity.y >= 0.001) && rb.velocity.y < 0.01f) { GameManager.instance.CheckMatch(new ShapeScript[] { this }, true); }
+            if (rb.velocity.y < 0f) { state = State.Falling; }
+            //if (yCheck && rb.velocity.y >= 0 /*&& rb.velocity.y < 0.05f*/) { GameManager.instance.CheckMatch(new ShapeScript[] { this }, true); }
         }
         else
         {
-            yCheck = false;
+            state = State.Idle;
+        }
+
+        switch (state)
+        {
+            default:
+            case State.Idle:
+                break;
+            case State.Falling:
+                if (rb.velocity.y >= 0 && rb.velocity.y < 0.05f) { GameManager.instance.CheckMatch(new ShapeScript[] { this }, true); }
+                break;
         }
     }
 
