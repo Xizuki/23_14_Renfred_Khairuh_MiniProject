@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 ﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audioPlay":false,"sceneViewState":{"showFog":true,"showMaterialUpdate":false,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true},"in2DMode":false,"pivot":{"x":562.8118286132813,"y":152.32498168945313,"z":88.901611328125},"rotation":{"x":0.023687947541475297,"y":-0.0039022541604936125,"z":-0.00009249100548913702,"w":-0.999711811542511},"size":742.8231811523438,"orthographic":false}
+=======
+﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audioPlay":false,"sceneViewState":{"showFog":true,"showMaterialUpdate":false,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true},"in2DMode":false,"pivot":{"x":3.1669912338256838,"y":-2.5500121116638185,"z":22.581350326538087},"rotation":{"x":0.2196779102087021,"y":0.1773788332939148,"z":-0.04065560922026634,"w":0.9584496021270752},"size":65.05452728271485,"orthographic":false}
+>>>>>>> branch_Merged_Renfred

@@ -6,11 +6,18 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+<<<<<<< HEAD
 
     public int score;
     //public int moves;
 
     public Text scoreText;
+=======
+    public bool areShapesFalling;
+    public float CheckShapesNotFallingTime;
+    public float CheckShapesNotFallingTimer;
+    public ParticleSystem destroyedPart;
+>>>>>>> branch_Merged_Renfred
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +29,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        CheckShapesVelocity();
+        CheckShapesNotFallingTimer += Time.deltaTime;
     }
 
     public bool CheckMatch(ShapeScript[] shapes, bool canCheck) // Can Tidy up but dont need to rush
@@ -35,8 +43,6 @@ public class GameManager : MonoBehaviour
         foreach (ShapeScript shape in shapes)
         {
             bool[] Check = new bool[4];
-            bool[] yCheck = new bool[2];
-            bool[] xCheck = new bool[2];
             //print("shape name = " + shape.name);
             for (int i = 0; i < shape.adjacentShapeColliders.Length; i++)
             {
@@ -49,57 +55,93 @@ public class GameManager : MonoBehaviour
             }
 
 
-            if (Check[0] && Check[1]) { Destroy(shape.gameObject); Destroy(shape.adjacentShapeColliders[0].shape); Destroy(shape.adjacentShapeColliders[1].shape); Checkings = true; }
-            if (Check[2] && Check[3]) { Destroy(shape.gameObject); Destroy(shape.adjacentShapeColliders[2].shape); Destroy(shape.adjacentShapeColliders[3].shape); Checkings = true; }
+            if (Check[0] && Check[1]) { DestroyShapes(shape.gameObject.GetComponent<ShapeScript>(), shape.adjacentShapeColliders[0].shape.GetComponent<ShapeScript>(), shape.adjacentShapeColliders[1].shape.GetComponent<ShapeScript>()); Checkings = true; }
+            if (Check[2] && Check[3]) { DestroyShapes(shape.gameObject.GetComponent<ShapeScript>(), shape.adjacentShapeColliders[2].shape.GetComponent<ShapeScript>(), shape.adjacentShapeColliders[3].shape.GetComponent<ShapeScript>()); Checkings = true; }
 
-            for(int i =0; i< Check.Length; i++)
+            for (int i =0; i< Check.Length; i++)
             {
+<<<<<<< HEAD
                 if (shape.adjacentShapeColliders[i].shape == null) { break; }
                 if (!Check[i]) { continue; }
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape == null) { break; }
+=======
+                if (shape.adjacentShapeColliders[i].shape == null) { continue; }
+                if (!Check[i]) { continue; }
+                if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape == null) { continue; }
+>>>>>>> branch_Merged_Renfred
                 if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.name == shape.name)
                 {
-                    Destroy(shape.gameObject);
-                    Destroy(shape.adjacentShapeColliders[i].shape);
-                    Destroy(shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape);
+                    DestroyShapes(shape, shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>(), shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>());
                     Checkings = true;
+
+                    areShapesFalling = true;
                 }
             }
-            /*
-            if (xCheck[0]) 
-            {
-                if (shape.adjacentShapeColliders[0].shape == null) { break; }
-                if (shape.adjacentShapeColliders[0].shape.GetComponent<ShapeScript>().adjacentShapeColliders[0].shape == null) { break; } 
-                if (shape.adjacentShapeColliders[0].shape.GetComponent<ShapeScript>().adjacentShapeColliders[0].shape.name == shape.name) { return true; } 
-            }
-            if (xCheck[1])
-            {
-                if (shape.adjacentShapeColliders[1].shape == null) { break; }
-                if (shape.adjacentShapeColliders[1].shape.GetComponent<ShapeScript>().adjacentShapeColliders[1].shape == null) { break; }
-                if (shape.adjacentShapeColliders[1].shape.GetComponent<ShapeScript>().adjacentShapeColliders[1].shape.name == shape.name) { return true; }
-            }
-            if (yCheck[0])
-            {
-                if (shape.adjacentShapeColliders[2].shape == null) { break; }
-                if (shape.adjacentShapeColliders[2].shape.GetComponent<ShapeScript>().adjacentShapeColliders[2].shape == null) { break; }
-                if (shape.adjacentShapeColliders[2].shape.GetComponent<ShapeScript>().adjacentShapeColliders[2].shape.name == shape.name) { return true; }
-            }
-            if (yCheck[1])
-            {
-                if (shape.adjacentShapeColliders[3].shape == null) { break; }
-                if (shape.adjacentShapeColliders[3].shape.GetComponent<ShapeScript>().adjacentShapeColliders[3].shape == null) { break; }
-                if (shape.adjacentShapeColliders[3].shape.GetComponent<ShapeScript>().adjacentShapeColliders[3].shape.name == shape.name) { return true; }
-            }
 
-
-            */
         }
         return Checkings;
     }
 
+<<<<<<< HEAD
     public void GainScore(int plusScore)
     {
         score += plusScore;
         scoreText.text = "Score : " + score;
+=======
+    public void DestroyShapes(ShapeScript shape1, ShapeScript shape2, ShapeScript shape3)
+    {
+        ParticleSystem part1 = Instantiate(destroyedPart, shape1.transform.position, Quaternion.identity);
+        ParticleSystem part2 = Instantiate(destroyedPart, shape2.transform.position, Quaternion.identity);
+        ParticleSystem part3 = Instantiate(destroyedPart, shape3.transform.position, Quaternion.identity);
+
+        print(shape1.GetComponentInChildren<MeshRenderer>().material.color);
+
+        part1.startColor = shape1.GetComponentInChildren<MeshRenderer>().material.color;
+        part2.startColor = part1.startColor;
+        part3.startColor = part1.startColor;
+
+        CheckSameShape(shape1, part1.startColor);
+        CheckSameShape(shape2, part1.startColor);
+        CheckSameShape(shape3, part1.startColor);
+
+        Destroy(shape1.gameObject);
+        Destroy(shape2.gameObject);
+        Destroy(shape3.gameObject);
+    }
+
+    public void CheckSameShape(ShapeScript shape, Color color)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (shape.adjacentShapeColliders[i].shape == null) { continue; }
+            if (shape.adjacentShapeColliders[i].shape.name != shape.gameObject.name) { continue; }
+            if (shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().ChainReactionCheck) { continue; }
+
+            shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().ChainReactionCheck = true;
+
+            CheckSameShape(shape.adjacentShapeColliders[i].shape.GetComponent<ShapeScript>(),color);
+
+            ParticleSystem part1 = Instantiate(destroyedPart, shape.transform.position, Quaternion.identity);
+            part1.startColor = color;
+
+            Destroy(shape.adjacentShapeColliders[i].shape);
+
+        } 
+    }
+
+    public void CheckShapesVelocity()
+    {
+        if(CheckShapesNotFallingTimer < CheckShapesNotFallingTime) { return; }
+        CheckShapesNotFallingTimer = 0;
+        if (!areShapesFalling) { return; }
+
+        GameObject[] shapes = GameObject.FindGameObjectsWithTag("Shape");
+
+        foreach (GameObject shape in shapes)
+        {
+            if(Mathf.RoundToInt(shape.GetComponent<Rigidbody>().velocity.y) !=0) { return; }
+        }
+        areShapesFalling = false;
+>>>>>>> branch_Merged_Renfred
     }
 }

@@ -21,6 +21,7 @@ public class PlayerInputScript : MonoBehaviour
     public GameObject prefabSwappingCollider;
     public GameObject runtimeSwappingCollider;
 
+    [SerializeField]
     private bool triggerOnce = false;
     [SerializeField]private bool checkOnce = false;
 
@@ -40,7 +41,7 @@ public class PlayerInputScript : MonoBehaviour
 
     void SelectObject()
     {
-        if (isSwapping) { return; } // If in Swapping - Dont Run the Code
+        if (isSwapping || GameManager.instance.areShapesFalling) { return; } // If in Swapping - Dont Run the Code
         if (!Input.GetKeyDown(KeyCode.Mouse0)) { return; } // If not Left Clicking - Dont Run the Code
 
         RaycastHit hit;
@@ -118,6 +119,7 @@ public class PlayerInputScript : MonoBehaviour
 
     void Swapping()
     {
+<<<<<<< HEAD
         if (triggerOnce)
         {
             checkOnce = false;
@@ -126,6 +128,8 @@ public class PlayerInputScript : MonoBehaviour
             checkOnce = true;
 
 
+=======
+>>>>>>> branch_Merged_Renfred
         if (!isSwapping) { return; }
 
         selectedObject1.transform.position += Obj1ToObj2 * swappingSpeed * Time.deltaTime;
@@ -135,9 +139,13 @@ public class PlayerInputScript : MonoBehaviour
 
         if(swappingTimer < swappingDuration) { return; }
 
+<<<<<<< HEAD
         print(GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }, checkOnce));
 
         if (GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }, checkOnce) == true)
+=======
+        if (GameManager.instance.CheckMatch(new ShapeScript[] { selectedObject1.GetComponent<ShapeScript>(), selectedObject2.GetComponent<ShapeScript>() }) == true)
+>>>>>>> branch_Merged_Renfred
         {
             Destroy(runtimeSwappingCollider);
             isSwapping = false;
@@ -154,6 +162,7 @@ public class PlayerInputScript : MonoBehaviour
 
             selectedObject1 = null;
             selectedObject2 = null;
+
         }
         else 
         {
@@ -165,6 +174,7 @@ public class PlayerInputScript : MonoBehaviour
 
             if (swappingTimer < (swappingDuration * 2)) { return; }
             Destroy(runtimeSwappingCollider);
+
             isSwapping = false;
             swappingTimer = 0;
 
