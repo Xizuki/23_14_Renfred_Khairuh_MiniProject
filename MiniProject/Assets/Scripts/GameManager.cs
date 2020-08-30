@@ -156,45 +156,41 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
+
                 bool[] Check = new bool[2];
-                try
+
+                if (!shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape) { continue; }
+
+                if (!shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape) { continue; }
+
+
+
+
+
+                if (shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape && shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape)
                 {
-                    if (shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>() == null) { }
-                }
-                catch { }
-                try
-                {
-                    if (shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>() == null) { }
-                }
-                catch { }
 
+                    ShapeScript shape1SpacesAway = shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>();
+                    ShapeScript shape2SpacesAway = shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>();
 
-                ShapeScript shape1SpacesAway = shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>();
-                ShapeScript shape2SpacesAway = shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>().adjacentShapeColliders[i].shape.GetComponent<ShapeScript>();
+                    if (shape1SpacesAway.name == shape.name) { Check[0] = true; }
+                    if (shape2SpacesAway.name == shape.name) { Check[1] = true; }
 
-                if (shape1SpacesAway.name == name) { Check[0] = true; }
-                if (shape2SpacesAway.name == name) { Check[1] = true; }
+                    if (Check[0] && Check[1]) { return; }
 
-                if (Check[0] && Check[1]) { return; }
-
-                if (Check[0])
-                {
-                    for (int ii = 0; ii < 2; ii++)
+                    if (Check[0])
                     {
-                        if (i == 0 || i == 1)
+                        for (int ii = 0; ii < 2; ii++)
                         {
-                            if (shape2SpacesAway.adjacentShapeColliders[2].shape.name == shape.name
-                            || shape2SpacesAway.adjacentShapeColliders[3].shape.name == shape.name)
+                            if (i == 0 || i == 1)
                             {
-                                return;
+                                if (shape2SpacesAway.adjacentShapeColliders[2].shape) { if (shape2SpacesAway.adjacentShapeColliders[2].shape.name == shape.name) { return; } }
+                                if (shape2SpacesAway.adjacentShapeColliders[3].shape) { if (shape2SpacesAway.adjacentShapeColliders[3].shape.name == shape.name) { return; } }
                             }
-                        }
-                        else if (i == 2 || i == 3)
-                        {
-                            if (shape2SpacesAway.adjacentShapeColliders[0].shape.name == shape.name
-                            || shape2SpacesAway.adjacentShapeColliders[1].shape.name == shape.name)
+                            else if (i == 2 || i == 3)
                             {
-                                return;
+                                if (shape2SpacesAway.adjacentShapeColliders[0].shape) { if (shape2SpacesAway.adjacentShapeColliders[0].shape.name == shape.name) { return; } }
+                                if (shape2SpacesAway.adjacentShapeColliders[1].shape) { if (shape2SpacesAway.adjacentShapeColliders[1].shape.name == shape.name) { return; } }
                             }
                         }
                     }
