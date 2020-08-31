@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.590481, g: 0.3976756, b: 0.6247115, a: 1}
+  m_IndirectSpecularColor: {r: 0.5904653, g: 0.3976756, b: 0.6247135, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -310,6 +310,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8093751483794944336, guid: 172e93db7f3f21a4f8c774618d0f596d,
+        type: 3}
+      propertyPath: m_Text
+      value: Level 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 172e93db7f3f21a4f8c774618d0f596d, type: 3}
 --- !u!1 &1484917003
@@ -322,6 +327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1484917004}
   - component: {fileID: 1484917005}
+  - component: {fileID: 1484917006}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -366,6 +372,19 @@ MonoBehaviour:
   CheckShapesNotFallingTimer: 0
   destroyedPart: {fileID: 7908390964745266509, guid: 75c29f144e80eb4469553aca58d75f29,
     type: 3}
+--- !u!114 &1484917006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484917003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1b1703c622817b4c889fa276d7459c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotateSpeed: 2
 --- !u!1 &1491967303
 GameObject:
   m_ObjectHideFlags: 0
